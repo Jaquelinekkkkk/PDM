@@ -18,6 +18,6 @@ public class MainActivityB extends AppCompatActivity {
        Bundle bundle=getIntent().getExtras();
        String msg=bundle.getString("mensagem");
 
-        });
+
     }
 }

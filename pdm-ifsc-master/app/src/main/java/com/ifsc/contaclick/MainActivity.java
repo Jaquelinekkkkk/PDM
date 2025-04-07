@@ -37,14 +37,15 @@ public class MainActivity extends AppCompatActivity {
         buttonCalcular = findViewById(R.id.button);
 
         buttonCalcular.setOnClickListener(v -> {
-          //  double peso, altura, imc;
-            b.setOnClickListener(v->{
+            //  double peso, altura, imc;
 
-Intent intent = new Intent(getApplicationContext(), MainActivityB.class);
+
+            Intent intent = new Intent(getApplicationContext(), MainActivityB.class);
             String msg = edpeso.getText().toString();
             intent.putExtra("mensagem", msg);
             startActivity(intent);
-    startActivity(intent);
+            startActivity(intent);
         });
+    }
 
 }
