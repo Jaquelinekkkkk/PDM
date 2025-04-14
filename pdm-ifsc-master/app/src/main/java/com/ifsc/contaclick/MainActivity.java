@@ -8,42 +8,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
-
-
-    Integer i = 0;
-
-    EditText edpeso, edaltura;
-    TextView tvresultado;
+    int i=0;
+    EditText edpeso,edaltura;
+    TextView tvresulado;
     Button buttonCalcular;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("ciclo de vida", "metodo onCreate");
-
+        Log.d("ciclo de vida","metodo onCreate");
         setContentView(R.layout.activity_main);
+        edpeso=findViewById(R.id.edpeso);
+        edpeso.setText("60");
+        edaltura=findViewById(R.id.edaltura);
+        edaltura.setText("1.58");
 
-        edpeso = findViewById(R.id.edpeso);
-
-        edaltura = findViewById(R.id.edaltura);
-
-        tvresultado = findViewById(R.id.tvresultadoimc);
-
-        buttonCalcular = findViewById(R.id.button);
-
-        buttonCalcular.setOnClickListener(v -> {
-            //  double peso, altura, imc;
-
-
+        buttonCalcular=findViewById(R.id.button);
+        //define um tratamento para o click do botão
+        buttonCalcular.setOnClickListener(v->{
             Intent intent = new Intent(getApplicationContext(), MainActivityB.class);
-            String msg = edpeso.getText().toString();
-            intent.putExtra("mensagem", msg);
-            startActivity(intent);
+            Double peso= Double.parseDouble(edpeso.getText().toString());
+            Double altura= Double.parseDouble(edaltura.getText().toString());
+            //Definindi parametros para o bundle peso e altura
+            intent.putExtra("peso", peso);
+            intent.putExtra("altura", altura);
+
             startActivity(intent);
         });
     }
