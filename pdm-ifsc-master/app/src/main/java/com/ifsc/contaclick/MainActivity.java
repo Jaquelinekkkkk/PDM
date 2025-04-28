@@ -15,19 +15,19 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
     int i=0;
-    EditText edpeso,edaltura;
-    TextView tvresulado;
-    Button buttonCalcular;
+    EditText editText1,editText2;
+    TextView textName, textDesc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("ciclo de vida","metodo onCreate");
         setContentView(R.layout.activity_main);
-        edpeso=findViewById(R.id.edpeso);
-        edpeso.setText("60");
-        edaltura=findViewById(R.id.edaltura);
-        edaltura.setText("1.58");
+        editText1=findViewById(R.id.editText1);
+        editText1.setText("60");
+        editText2=findViewById(R.id.editText2);
+        editText2.setText("1.58");
 
         buttonCalcular=findViewById(R.id.button);
         //define um tratamento para o click do botão
