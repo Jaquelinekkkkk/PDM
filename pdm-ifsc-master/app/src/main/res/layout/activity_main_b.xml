@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="Altura"
+        android:text="Peso"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
 
-        android:text="Peso"
+        android:text="Altura"
         android:textSize="32sp"
 
         app:layout_constraintBottom_toTopOf="@+id/textView6"
