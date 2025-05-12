@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     int i=0;
-    String [] nomes = new String[] { "Mercurio","Venus", "Marte", "Saturno", "Plutão", "Terra", "Urano", "Netuno", "Júpter"};
+    String [] nomes = new String[] { "Mercurio","Venus", "Marte", "Saturno", "Terra", "Urano", "Netuno", "Júpter"};
    // ListView lv;
     ListView lv;
 
@@ -25,13 +25,20 @@ public class MainActivity extends AppCompatActivity {
         lv=findViewById(R.id.listView);
 
         //ADAPTADOR
-        ArrayAdapter<String> a = new ArrayAdapter(this,
-                R.layout.item_lista,
-                R.id.textView,
-                nomes);
+       // ArrayAdapter<String> a = new ArrayAdapter(this,
+       //         R.layout.item_lista,
+           //     R.id.textView,
+            //    nomes);
+        PlanetaDao planetaDao=new PlanetaDao();
 
-        lv.setAdapter(a);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        AdapterPlaneta ap = new AdapterPlaneta(this,
+                R.layout.item_lista,
+             planetaDao.getPlanetas());
+             lv.setAdapter(ap);
+
+     //   lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){...}) ;
+
+              lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
