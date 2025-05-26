@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CountClick</string>
+    <string name="app_name">sqlite</string>
     <string name="ola">Hello</string>
-    <string name="click">Click</string>
+    <string name="click">Insert</string>
 </resources>
