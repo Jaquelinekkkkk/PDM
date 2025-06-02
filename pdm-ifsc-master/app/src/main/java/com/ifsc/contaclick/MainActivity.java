@@ -30,40 +30,48 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db=openOrCreateDatabase("banco", Context.MODE_PRIVATE,null);
 
-        db.execSQL("CREATE TABLE notas(id INTGER PRIMARY KEY AUTOINCREMENT, txt VARCHAR)");
-        buttonInsere=findViewById(R.id.buttonInsere);
-        editText=findViewById(R.id.editText);
-        listView=findViewById(R.id.listView);
-        buttonInsere.setOnClickListener(v->{
-            String msg = editText.getText().toString();
-            insereNota(msg);
+        db = openOrCreateDatabase("banco", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS notas(id INTEGER PRIMARY KEY AUTOINCREMENT, txt VARCHAR)");
+
+        buttonInsere = findViewById(R.id.buttonInsere);
+        editText = findViewById(R.id.editText);
+        listView = findViewById(R.id.listView);
+
+        buttonInsere.setOnClickListener(v -> {
+            String nota = editText.getText().toString();
+            insereNota(nota);
         });
+    }
     public void listagemNotas(){
         Cursor cursor=db.rawQuery("SELECT * FROM notas", null);
         cursor.moveToFirst();
+
         ArrayList<String> listaNotas=new ArrayList<String>();
+
         while (!cursor.isAfterLast()){
-            int coluna=cursor.getColumnIndex(columnName "txt");
+            int coluna=cursor.getColumnIndex( "txt");
             listaNotas.add(cursor.getString(coluna));
             cursor.moveToNext();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context this,
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>( this,
                 android.R.layout.simple_list_item_1,
-                android.R.layout.id.text1,
-                listaNotas
-        );
+                android.R.id.text1,
+                listaNotas);
+
         listView.setAdapter(adapter);
         }
 
 
-    }
+
     public void insereNota(String txt){
      //   db.execSQL("INSERT INTO NOTAS(txt) VALUES(" + " ); ");
         ContentValues cv=new ContentValues();
         cv.put("txt", txt);
         db.insert("notas", null, cv);
         listagemNotas();
+       // db.insert("notas", null, cv);
+
     }
 }
