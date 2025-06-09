@@ -1,64 +1,52 @@
 package com.ifsc.contaclick;
-
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
-
-
-    Integer i = 0;
-
-    EditText edpeso, edaltura;
-    TextView tvresultado;
-    Button buttonCalcular;
-
+public class MainActivity extends AppCompatActivity implements SensorEventListener{
+    int i=0;
+    SensorManager mSensorManager;
+    Sensor sensor;
+    TextView tx,ty,tz;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tx =findViewById(R.id.textViewX);
+        ty =findViewById(R.id.textViewY);
+        tz =findViewById(R.id.textViewZ);
 
-        edpeso = findViewById(R.id.edpeso);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        edaltura = findViewById(R.id.edaltura);
+//        sensor=mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        sensor=mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        tvresultado = findViewById(R.id.tvresultadoimc);
-
-        buttonCalcular = findViewById(R.id.button);
-
-        buttonCalcular.setOnClickListener(v -> {
-            double peso, altura, imc;
-
-            peso = Double.parseDouble(edpeso.getText().toString());
-            altura= Double.parseDouble(edaltura.getText().toString());
-            imc = peso/(altura*peso);
-
-            tvresultado.setText(Double.toString(imc));
-
-        });
+        mSensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        tx.setText(Float.toString(sensorEvent.values[0]));
+        ty.setText(Float.toString(sensorEvent.values[1]));
+        tz.setText(Float.toString(sensorEvent.values[2]));
+
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+}
 
 
 
 
-
-        TextView tv = findViewById(R.id.tvpeso);
-        tv.setText(getString(R.string.app_name));
-
-        Button b = findViewById(R.id.button);
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setText(Integer.toString(i));
-                i++;
-            }
-        });
 
 
     }
