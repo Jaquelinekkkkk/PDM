@@ -1,13 +1,22 @@
 package com.ifsc.contaclick;
 
+
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 public class ExibeNotaActivity extends AppCompatActivity {
+    SQLiteDatabase db;
 
     TextView tvid;
     EditText editText;
@@ -34,7 +43,7 @@ public class ExibeNotaActivity extends AppCompatActivity {
         buttonUpdate= findViewById(R.id.buttonSalvar);
 
         //Configura o banco de dados
-        bancoDados = openOrCreateDatabase("banco", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("banco", MODE_PRIVATE, null);
         //Handler de eventos
         buttonCancelar.setOnClickListener(view -> {
             finish();
@@ -42,6 +51,11 @@ public class ExibeNotaActivity extends AppCompatActivity {
         buttonUpdate.setOnClickListener((view -> {
             updateNota();
             Toast.makeText(this, "Nota atualizada", Toast.LENGTH_SHORT).show();
+            finish();
+        }));
+        buttonDelete.setOnClickListener((view -> {
+            db.delete("notas", "id=?", new String[]{String.valueOf(nota.id)});
+            Toast.makeText(this, "Nota deletada", Toast.LENGTH_SHORT).show();
             finish();
         }));
 
@@ -55,7 +69,8 @@ public class ExibeNotaActivity extends AppCompatActivity {
     public void updateNota(){
         nota.texto= editText.getText().toString();
         ContentValues cv = new ContentValues();
-        bancoDados.update("notas", cv, "id=?", new String[]{String.valueOf(nota.id)});
+        cv.put("txt", nota.texto);
+        db.update("notas", cv, "id=?", new String[]{String.valueOf(nota.id)});
     }
 
 }
