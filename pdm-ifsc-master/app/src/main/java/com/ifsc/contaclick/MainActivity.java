@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        tx.setText(Float.toString(sensorEvent.values[0]));
-        ty.setText(Float.toString(sensorEvent.values[1]));
-        tz.setText(Float.toString(sensorEvent.values[2]));
+        tx.setText("X:"+Float.toString(sensorEvent.values[0]));
+        ty.setText("Y:"+Float.toString(sensorEvent.values[1]));
+        tz.setText("Z:"+Float.toString(sensorEvent.values[2]));
 
     }
     @Override
@@ -43,10 +43,3 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 }
-
-
-
-
-
-
-    }
