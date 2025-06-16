@@ -1,45 +1,49 @@
 package com.ifsc.contaclick;
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Bundle;
-import android.widget.TextView;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
+import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener{
-    int i=0;
-    SensorManager mSensorManager;
-    Sensor sensor;
-    TextView tx,ty,tz;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity{
+    PackageManager pm;
+
+    List<ApplicationInfo> applicationInfoList;
+
+    ListView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        tx =findViewById(R.id.textViewX);
-        ty =findViewById(R.id.textViewY);
-        tz =findViewById(R.id.textViewZ);
+        lv=findViewById(R.id.listView);
+        pm=getPackageManager();
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+       applicationInfoList= pm.getInstalledApplications(PackageManager.MATCH_ALL);
 
-//        sensor=mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        sensor=mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        mSensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+       AppAdapter appAdapter = new AppAdapter(this,R.layout.app_item,applicationInfoList);
+       lv.setAdapter(appAdapter);
+       lv.setOnItemClickListener((adapter, view, position, id) ->{
+           ApplicationInfo applicationInfo= (ApplicationInfo) adapter.getItemAtPosition(position);
+           Intent i =pm.getLaunchIntentForPackage(applicationInfo.packageName);
+           if(i!= null){
+               startActivity(i);
+           }else{
+               Toast.makeText(getApplicationContext(), "App não lançavel", Toast.LENGTH_LONG);
+           }
+        });
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        tx.setText("X:"+Float.toString(sensorEvent.values[0]));
-        ty.setText("Y:"+Float.toString(sensorEvent.values[1]));
-        tz.setText("Z:"+Float.toString(sensorEvent.values[2]));
 
-    }
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
 
 }
